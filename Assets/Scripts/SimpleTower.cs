@@ -48,14 +48,23 @@
             Enemy closestEnemy = null;
             var closestDistance = float.MaxValue;
 
+            // todo check thoroughly foreach - after destroy enemies
+
             foreach (var enemy in enemies)
             {
-                var distance = (enemy.transform.position - transform.position).magnitude;
-                if (distance <= firingRange && distance <= closestDistance)
+                var distance = Vector3.Distance(enemy.transform.position, transform.position);
+                if (distance > firingRange)
                 {
-                    closestEnemy = enemy;
-                    closestDistance = distance;
+                    continue;
                 }
+
+                if (distance > closestDistance)
+                {
+                    continue;
+                }
+
+                closestEnemy = enemy;
+                closestDistance = distance;
             }
 
             return closestEnemy;
