@@ -21,7 +21,7 @@
 
             transform.position += direction * speed * Time.deltaTime;
 
-            if ((transform.position - targetPosition).magnitude <= 0.2f)
+            if ((transform.position - targetPosition).sqrMagnitude <= 0.04f)
             {
                 Destroy(gameObject);
                 if (targetEnemy !=null)

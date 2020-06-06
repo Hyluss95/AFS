@@ -37,7 +37,7 @@
             var direction = (target - transform.position).normalized;
 
             transform.position += direction * speed * Time.deltaTime;
-            if ((transform.position - target).magnitude <= 0.1f)
+            if ((transform.position - target).sqrMagnitude <= 0.01f)
                 SetTarget();
         }
 
