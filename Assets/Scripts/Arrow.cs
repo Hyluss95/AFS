@@ -18,7 +18,8 @@
             var enemy = collision.collider.GetComponent<Enemy>();
             if (enemy)
             {
-                Destroy(enemy.gameObject);
+                //Destroy(enemy.gameObject);
+                enemy.gameObject.SetActive(false);
             }
 
             gameObject.SetActive(false);

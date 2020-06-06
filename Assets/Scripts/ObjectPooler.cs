@@ -3,20 +3,32 @@ using System.Collections;
 using System.Collections.Generic;
 
 [System.Serializable]
-
 public class ObjectPoolItem
 {
-    public GameObject objectToPool;
-    public int amountToPool;
-    public bool shouldExpand;
+    [SerializeField]
+    GameObject objectToPool;
+    [SerializeField]
+    int amountToPool;
+    [SerializeField]
+    bool shouldExpand;
+
+    public int AmountToPool => amountToPool;
+
+    public GameObject ObjectToPool => objectToPool;
+
+    public bool ShouldExpand => shouldExpand;
 }
 
 public class ObjectPooler : MonoBehaviour
 {
-
     public static ObjectPooler SharedInstance;
-    public List<ObjectPoolItem> itemsToPool;
-    public List<GameObject> pooledObjects;
+    
+    [SerializeField]
+    private List<ObjectPoolItem> itemsToPool;
+
+    private List<GameObject> pooledObjects;
+
+    public List<GameObject> PooledObjects => pooledObjects;
 
     void Awake()
     {
@@ -28,9 +40,9 @@ public class ObjectPooler : MonoBehaviour
         pooledObjects = new List<GameObject>();
         foreach (ObjectPoolItem item in itemsToPool)
         {
-            for (int i = 0; i < item.amountToPool; i++)
+            for (int i = 0; i < item.AmountToPool; i++)
             {
-                GameObject obj = (GameObject)Instantiate(item.objectToPool);
+                GameObject obj = (GameObject)Instantiate(item.ObjectToPool);
                 obj.SetActive(false);
                 pooledObjects.Add(obj);
             }
@@ -49,11 +61,11 @@ public class ObjectPooler : MonoBehaviour
 
         foreach (ObjectPoolItem item in itemsToPool)
         {
-            if (item.objectToPool.tag == tag)
+            if (item.ObjectToPool.tag == tag)
             {
-                if (item.shouldExpand)
+                if (item.ShouldExpand)
                 {
-                    GameObject obj = Instantiate(item.objectToPool);
+                    GameObject obj = Instantiate(item.ObjectToPool);
                     obj.SetActive(false);
                     pooledObjects.Add(obj);
                     return obj;

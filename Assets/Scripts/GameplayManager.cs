@@ -9,7 +9,7 @@
     {
         [Header("Prefabs")]
         [SerializeField]
-        private GameObject enemyPrefab;
+        private Enemy enemyPrefab;
 
         [SerializeField]
         private TowerTypeList towerTypeList;
@@ -88,11 +88,30 @@
             var position = new Vector3(Random.Range(boundsMin.x, boundsMax.x), enemyPrefab.transform.position.y,
                 Random.Range(boundsMin.y, boundsMax.y));
 
-            var enemy = Instantiate(enemyPrefab, position, Quaternion.identity).GetComponent<Enemy>();
-            enemy.OnEnemyDied += Enemy_OnEnemyDied;
+            var enemy = GetPooledObjectOrCreateNew(position);
             enemy.Initialize(boundsMin, boundsMax);
 
             enemies.Add(enemy);
+        }
+
+        private Enemy GetPooledObjectOrCreateNew(Vector3 position)
+        {
+            var poolItem = ObjectPooler.SharedInstance.GetPooledObject(enemyPrefab.tag);
+            Enemy enemy;
+            if (poolItem)
+            {
+                enemy = poolItem.GetComponent<Enemy>();
+                enemy.transform.position = position;
+                enemy.transform.rotation = Quaternion.identity;
+                enemy.gameObject.SetActive(true);
+            }
+            else
+            {
+                enemy = Instantiate(enemyPrefab, position, Quaternion.identity) as Enemy;
+                enemy.OnEnemyDied += Enemy_OnEnemyDied;
+            }
+
+            return enemy;
         }
 
         private void Enemy_OnEnemyDied(Enemy enemy)

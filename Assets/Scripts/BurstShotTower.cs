@@ -69,19 +69,8 @@ namespace AFSInterview
 
             while (spawnedBullets < burstSize)
             {
-                Arrow bullet;
-                bullet= ObjectPooler.SharedInstance.GetPooledObject(base.BulletPrefab.tag).GetComponent<Arrow>();
-                if (bullet != null)
-                {
-                    bullet.transform.position = base.BulletSpawnPoint.position;
-                    bullet.transform.rotation = Quaternion.identity;
-                    bullet.gameObject.SetActive(true);
-                }
-                else
-                {
-                    bullet = Instantiate(base.BulletPrefab, base.BulletSpawnPoint.position, Quaternion.identity) as Arrow;
-                }
-
+                Arrow bullet = GetPooledObjectOrCreateNew();
+                
                 bullet.Initialize(targetPosition);
                 spawnedBullets++;
                 yield return new WaitForSeconds(shotInterval);
@@ -90,5 +79,21 @@ namespace AFSInterview
             preventRotate = false;
         }
 
+        private Arrow GetPooledObjectOrCreateNew()
+        {
+            var bullet = ObjectPooler.SharedInstance.GetPooledObject(base.BulletPrefab.tag)?.GetComponent<Arrow>();
+            if (bullet != null)
+            {
+                bullet.transform.position = base.BulletSpawnPoint.position;
+                bullet.transform.rotation = Quaternion.identity;
+                bullet.gameObject.SetActive(true);
+            }
+            else
+            {
+                bullet = Instantiate(base.BulletPrefab, base.BulletSpawnPoint.position, Quaternion.identity) as Arrow;
+            }
+
+            return bullet;
+        }
     }
 }

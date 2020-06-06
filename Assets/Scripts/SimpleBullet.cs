@@ -24,7 +24,8 @@
                 Destroy(gameObject);
                 if (targetEnemy != null)
                 {
-                    Destroy(targetEnemy.gameObject);
+                    //Destroy(targetEnemy.gameObject);
+                    targetEnemy.gameObject.SetActive(false);
                 }
             }
         }
