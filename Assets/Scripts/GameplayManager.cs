@@ -19,16 +19,12 @@
         [SerializeField] private TextMeshProUGUI enemiesCountText;
         [SerializeField] private TextMeshProUGUI scoreText;
         
-        private List<Enemy> enemies;
+        private List<Enemy> enemies = new List<Enemy>();
         private float enemySpawnTimer;
         private int score;
 
         private static LayerMask groundMask = 8;
 
-        private void Awake()
-        {
-            enemies = new List<Enemy>();
-        }
 
         private void Update()
         {
@@ -89,7 +85,7 @@
         private void SpawnTower(Vector3 position)
         {
             var tower = Instantiate(towerPrefab, position, Quaternion.identity).GetComponent<SimpleTower>();
-            tower.Initialize(enemies);
+            tower.Initialize(ref enemies);
         }
     }
 }
