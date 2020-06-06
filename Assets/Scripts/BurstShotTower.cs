@@ -6,8 +6,6 @@ namespace AFSInterview
 
     public class BurstShotTower : SimpleTower
     {
-        public GameObject test;
-
         [SerializeField]
         private int burstSize;
 
@@ -54,10 +52,6 @@ namespace AFSInterview
 
             // here I know i have a mistake. Velocity of arrow is not constant - is increased during time
             //...
-
-
-            var x = Instantiate(test);
-            x.transform.position = predictedPosition;
 
             return predictedPosition;
         }
