@@ -15,7 +15,7 @@
 
         private IReadOnlyList<Enemy> enemies;
 
-        public void Initialize(IReadOnlyList<Enemy> enemies)
+        public void Initialize(ref IReadOnlyList<Enemy> enemies)
         {
             this.enemies = enemies;
             fireTimer = firingRate;
