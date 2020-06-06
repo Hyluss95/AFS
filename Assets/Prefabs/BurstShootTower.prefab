@@ -143,7 +143,7 @@ MonoBehaviour:
     type: 3}
   bulletSpawnPoint: {fileID: 2084140073318113224}
   firingRate: 0.3
-  firingRange: 15
+  firingRange: 7
   rotationSpeed: 5
   angleOfView: 10
   test: {fileID: 7577324009426626682, guid: 530182aaaf989f444833d42faa8b16b7, type: 3}

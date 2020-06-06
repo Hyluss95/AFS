@@ -6,15 +6,12 @@
 
     public class Arrow : Bullet
     {
-      
-
         private Rigidbody rigidbody;
 
         public void Initialize(Vector3 targetPosition)
         {
-        //    Vector3 vo = CalculateVelocty(targetPosition, transform.position, distance / base.Speed);
             Vector3 vo = CalculateVelocty(targetPosition, transform.position);
-            rigidbody =GetComponent<Rigidbody>();
+            rigidbody = GetComponent<Rigidbody>();
             rigidbody.velocity = vo;
         }
 
