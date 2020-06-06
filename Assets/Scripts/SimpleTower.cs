@@ -10,8 +10,13 @@
         [SerializeField] private float firingRate;
         [SerializeField] private float firingRange;
 
+        [SerializeField]
+        private float rotationSpeed;
+
+        [SerializeField]
+        private float angleOfView;
+
         private float fireTimer;
-        private Enemy targetEnemy;
 
         private IReadOnlyList<Enemy> enemies;
 
@@ -23,32 +28,51 @@
 
         private void Update()
         {
-            targetEnemy = FindClosestEnemy();
+            Enemy targetEnemy = FindClosestEnemy();
             if (targetEnemy != null)
             {
-                var lookRotation = Quaternion.LookRotation(targetEnemy.transform.position - transform.position);
-                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, lookRotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+                RotateToEnemy(targetEnemy);
+
+                if (fireTimer <= 0f)
+                {
+                    if (IsTowerLooksOnEnemy(targetEnemy))
+                    {
+                        var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity)
+                            .GetComponent<Bullet>();
+                        bullet.Initialize(targetEnemy.gameObject);
+                        fireTimer = firingRate;
+                    }
+                }
             }
 
             fireTimer -= Time.deltaTime;
-            if (fireTimer <= 0f)
-            {
-                if (targetEnemy != null)
-                {
-                    var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity).GetComponent<Bullet>();
-                    bullet.Initialize(targetEnemy.gameObject);
-                }
+            
+        }
 
-                fireTimer = firingRate;
-            }
+        private bool IsTowerLooksOnEnemy(Enemy targetEnemy)
+        {
+            var direction = targetEnemy.transform.position - transform.position;
+            Debug.Log(Vector3.Angle(direction, transform.forward));
+
+            return (Vector3.Angle(direction, transform.forward)) < angleOfView;
+        }
+
+        private void RotateToEnemy(Enemy enemy)
+        {
+            Vector3 targetDirection = enemy.transform.position - transform.position;
+            float singleStep = rotationSpeed * Time.deltaTime;
+
+            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
+            var lookRotation = Quaternion.LookRotation(newDirection);
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, lookRotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+
+            Debug.DrawRay(transform.position, newDirection, Color.red);
         }
 
         private Enemy FindClosestEnemy()
         {
             Enemy closestEnemy = null;
             var closestDistance = float.MaxValue;
-
-            // todo check thoroughly foreach - after destroy enemies
 
             foreach (var enemy in enemies)
             {

@@ -223,3 +223,5 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 5809919413682724424}
   firingRate: 2
   firingRange: 4
+  rotationSpeed: 5
+  angleOfView: 10
