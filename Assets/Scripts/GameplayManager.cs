@@ -1,4 +1,6 @@
-﻿namespace AFSInterview
+﻿using System.Linq;
+
+namespace AFSInterview
 {
     using System.Collections.Generic;
     using TMPro;
@@ -8,7 +10,8 @@
     {
         [Header("Prefabs")] 
         [SerializeField] private GameObject enemyPrefab;
-        [SerializeField] private GameObject towerPrefab;
+       
+        [SerializeField] private TowerTypeList towerTypeList;
 
         [Header("Settings")] 
         [SerializeField] private Vector2 boundsMin;
@@ -38,14 +41,19 @@
 
             if (Input.GetMouseButtonDown(0))
             {
-                TrySpawnTower();
+                TrySpawnTower(TowerType.Simple);
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                TrySpawnTower(TowerType.Burst);
             }
 
             scoreText.text = "Score: " + score;
             enemiesCountText.text = "Enemies: " + enemies.Count;
         }
 
-        private void TrySpawnTower()
+        private void TrySpawnTower(TowerType type)
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -59,10 +67,11 @@
                 return;
             }
 
+            var towerPrefab = towerTypeList.TowerList.Single(t => t.Type == type).TowerPrefab;
             var spawnPosition = hit.point;
             spawnPosition.y = towerPrefab.transform.position.y;
 
-            SpawnTower(spawnPosition);
+            SpawnTower(towerPrefab,spawnPosition);
         }
 
         private void SpawnEnemy()
@@ -82,7 +91,7 @@
             score++;
         }
 
-        private void SpawnTower(Vector3 position)
+        private void SpawnTower(SimpleTower towerPrefab, Vector3 position)
         {
             var tower = Instantiate(towerPrefab, position, Quaternion.identity).GetComponent<SimpleTower>();
             tower.Initialize(ref enemies);

@@ -6,23 +6,28 @@
     {
         [SerializeField] private float speed;
 
-        private GameObject targetObject;
+        private Enemy targetEnemy;
+        private Vector3 targetPosition;
 
-        public void Initialize(GameObject target)
+        public void Initialize(Enemy target, Vector3 targetPosition)
         {
-            targetObject = target;
+            targetEnemy = target;
+            this.targetPosition = targetPosition;
         }
 
         private void Update()
         {
-            var direction = (targetObject.transform.position - transform.position).normalized;
+            var direction = (targetPosition - transform.position).normalized;
 
             transform.position += direction * speed * Time.deltaTime;
 
-            if ((transform.position - targetObject.transform.position).magnitude <= 0.2f)
+            if ((transform.position - targetPosition).magnitude <= 0.2f)
             {
                 Destroy(gameObject);
-                Destroy(targetObject);
+                if (targetEnemy !=null)
+                {
+                    Destroy(targetEnemy.gameObject);
+                }
             }
         }
     }

@@ -5,7 +5,7 @@
 
     public class SimpleTower : MonoBehaviour
     {
-        [SerializeField] private GameObject bulletPrefab;
+        [SerializeField] private Bullet bulletPrefab;
         [SerializeField] private Transform bulletSpawnPoint;
         [SerializeField] private float firingRate;
         [SerializeField] private float firingRange;
@@ -16,9 +16,15 @@
         [SerializeField]
         private float angleOfView;
 
-        private float fireTimer;
+        protected float fireTimer;
 
         private IReadOnlyList<Enemy> enemies;
+
+        protected Bullet BulletPrefab => bulletPrefab;
+
+        protected Transform BulletSpawnPoint => bulletSpawnPoint;
+
+        protected float FiringRate => firingRate;
 
         public void Initialize(ref List<Enemy> enemies)
         {
@@ -26,7 +32,7 @@
             fireTimer = firingRate;
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             Enemy targetEnemy = FindClosestEnemy();
             if (targetEnemy != null)
@@ -37,27 +43,23 @@
                 {
                     if (IsTowerLooksOnEnemy(targetEnemy))
                     {
-                        var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity)
-                            .GetComponent<Bullet>();
-                        bullet.Initialize(targetEnemy.gameObject);
+                        var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
+                        bullet.Initialize(targetEnemy, targetEnemy.transform.position );
                         fireTimer = firingRate;
                     }
                 }
             }
 
-            fireTimer -= Time.deltaTime;
-            
+            fireTimer -=Time.deltaTime;
         }
 
-        private bool IsTowerLooksOnEnemy(Enemy targetEnemy)
+        protected bool IsTowerLooksOnEnemy(Enemy targetEnemy)
         {
             var direction = targetEnemy.transform.position - transform.position;
-            Debug.Log(Vector3.Angle(direction, transform.forward));
-
             return (Vector3.Angle(direction, transform.forward)) < angleOfView;
         }
 
-        private void RotateToEnemy(Enemy enemy)
+        protected void RotateToEnemy(Enemy enemy)
         {
             Vector3 targetDirection = enemy.transform.position - transform.position;
             float singleStep = rotationSpeed * Time.deltaTime;
@@ -69,7 +71,7 @@
             Debug.DrawRay(transform.position, newDirection, Color.red);
         }
 
-        private Enemy FindClosestEnemy()
+        protected Enemy FindClosestEnemy()
         {
             Enemy closestEnemy = null;
             var closestDistance = float.MaxValue;
