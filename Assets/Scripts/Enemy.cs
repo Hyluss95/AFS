@@ -18,11 +18,6 @@
         private Vector3 target;
 
         private Vector3 dir;
-        private Vector3 vel;
-
-        public Vector3 Dir => dir;
-
-        public float Speed => speed;
 
         public void Initialize(Vector2 boundsMin, Vector2 boundsMax)
         {
@@ -44,9 +39,9 @@
             var direction = (target - transform.position).normalized;
 
             dir = direction;
-            vel = direction * speed * Time.deltaTime;
+            var velocity = direction * speed * Time.deltaTime;
 
-            transform.position += vel;
+            transform.position += velocity;
             if ((transform.position - target).sqrMagnitude <= 0.01f)
                 SetTarget();
         }
@@ -63,16 +58,9 @@
             target.z = Mathf.Clamp(target.z, boundsMin.y, boundsMax.y);
         }
 
-        public Vector3 PredictPlayerPositionTest()
-        {
-            return transform.position + (dir * (speed));
-            //     return transform.position + (dir * speed);
-        }
-
         public Vector3 PredictPlayerPosition(float time)
         {
             return transform.position + (dir * speed * time);
-        //     return transform.position + (dir * speed);
         }
 
     }

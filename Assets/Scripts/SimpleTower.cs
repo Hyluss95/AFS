@@ -67,8 +67,6 @@
             Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
             var lookRotation = Quaternion.LookRotation(newDirection);
             transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, lookRotation.eulerAngles.y, transform.rotation.eulerAngles.z);
-
-            Debug.DrawRay(transform.position, newDirection, Color.red);
         }
 
         protected Enemy FindClosestEnemy()

@@ -1,7 +1,5 @@
 ﻿namespace AFSInterview
 {
-    using System.Collections;
-    using System.Collections.Generic;
     using UnityEngine;
 
     public class Arrow : Bullet
@@ -10,7 +8,7 @@
 
         public void Initialize(Vector3 targetPosition)
         {
-            Vector3 vo = CalculateVelocty(targetPosition, transform.position);
+            Vector3 vo = CalculateVelocity(targetPosition, transform.position);
             rigidbody = GetComponent<Rigidbody>();
             rigidbody.velocity = vo;
         }
@@ -25,7 +23,7 @@
             Destroy(gameObject);
         }
 
-        public static Vector3 CalculateVelocty(Vector3 target, Vector3 origin)
+        public static Vector3 CalculateVelocity(Vector3 target, Vector3 origin)
         {
             Vector3 distance = target - origin;
             Vector3 distanceXz = distance;

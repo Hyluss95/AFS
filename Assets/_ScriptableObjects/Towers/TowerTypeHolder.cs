@@ -1,18 +1,21 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using AFSInterview;
-using UnityEngine;
-
-
-[Serializable]
-public class TowerTypeHolder
+﻿namespace AFSInterview
 {
+    using System;
+    using UnityEngine;
 
-    [SerializeField] TowerType type;
-    [SerializeField] SimpleTower towerPrefab;
+    [Serializable]
+    public class TowerTypeHolder
+    {
 
-    public TowerType Type => type;
+        [SerializeField]
+        TowerType type;
 
-    public SimpleTower TowerPrefab => towerPrefab;
+        [SerializeField]
+        SimpleTower towerPrefab;
+
+        public TowerType Type => type;
+
+        public SimpleTower TowerPrefab => towerPrefab;
+    }
+
 }

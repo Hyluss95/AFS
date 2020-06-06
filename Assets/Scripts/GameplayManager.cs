@@ -1,27 +1,36 @@
-﻿using System.Linq;
-
-namespace AFSInterview
+﻿namespace AFSInterview
 {
+    using System.Linq;
     using System.Collections.Generic;
     using TMPro;
     using UnityEngine;
 
     public class GameplayManager : MonoBehaviour
     {
-        [Header("Prefabs")] 
-        [SerializeField] private GameObject enemyPrefab;
-       
-        [SerializeField] private TowerTypeList towerTypeList;
+        [Header("Prefabs")]
+        [SerializeField]
+        private GameObject enemyPrefab;
 
-        [Header("Settings")] 
-        [SerializeField] private Vector2 boundsMin;
-        [SerializeField] private Vector2 boundsMax;
-        [SerializeField] private float enemySpawnRate;
+        [SerializeField]
+        private TowerTypeList towerTypeList;
 
-        [Header("UI")] 
-        [SerializeField] private TextMeshProUGUI enemiesCountText;
-        [SerializeField] private TextMeshProUGUI scoreText;
-        
+        [Header("Settings")]
+        [SerializeField]
+        private Vector2 boundsMin;
+
+        [SerializeField]
+        private Vector2 boundsMax;
+
+        [SerializeField]
+        private float enemySpawnRate;
+
+        [Header("UI")]
+        [SerializeField]
+        private TextMeshProUGUI enemiesCountText;
+
+        [SerializeField]
+        private TextMeshProUGUI scoreText;
+
         private List<Enemy> enemies = new List<Enemy>();
         private float enemySpawnTimer;
         private int score;
@@ -71,13 +80,14 @@ namespace AFSInterview
             var spawnPosition = hit.point;
             spawnPosition.y = towerPrefab.transform.position.y;
 
-            SpawnTower(towerPrefab,spawnPosition);
+            SpawnTower(towerPrefab, spawnPosition);
         }
 
         private void SpawnEnemy()
         {
-            var position = new Vector3(Random.Range(boundsMin.x, boundsMax.x), enemyPrefab.transform.position.y, Random.Range(boundsMin.y, boundsMax.y));
-            
+            var position = new Vector3(Random.Range(boundsMin.x, boundsMax.x), enemyPrefab.transform.position.y,
+                Random.Range(boundsMin.y, boundsMax.y));
+
             var enemy = Instantiate(enemyPrefab, position, Quaternion.identity).GetComponent<Enemy>();
             enemy.OnEnemyDied += Enemy_OnEnemyDied;
             enemy.Initialize(boundsMin, boundsMax);
@@ -89,7 +99,6 @@ namespace AFSInterview
         {
             enemies.Remove(enemy);
             score++;
-
         }
 
         private void SpawnTower(SimpleTower towerPrefab, Vector3 position)

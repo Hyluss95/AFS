@@ -6,7 +6,6 @@
     {
         [SerializeField] private float speed;
 
-
         public float Speed => speed;
     }
 }
