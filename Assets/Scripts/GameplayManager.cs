@@ -89,6 +89,7 @@ namespace AFSInterview
         {
             enemies.Remove(enemy);
             score++;
+
         }
 
         private void SpawnTower(SimpleTower towerPrefab, Vector3 position)

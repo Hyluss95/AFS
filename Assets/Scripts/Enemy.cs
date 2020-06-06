@@ -17,12 +17,19 @@
         private float speed;
         private Vector3 target;
 
+        private Vector3 dir;
+        private Vector3 vel;
+
+        public Vector3 Dir => dir;
+
+        public float Speed => speed;
+
         public void Initialize(Vector2 boundsMin, Vector2 boundsMax)
         {
             this.boundsMin = boundsMin;
             this.boundsMax = boundsMax;
 
-            speed = maxSpeed + Random.Range(-speedVariance, speedVariance) * maxSpeed;
+            speed = Mathf.Max( maxSpeed, Random.Range(0, speedVariance));
 
             SetTarget();
         }
@@ -36,7 +43,10 @@
         {
             var direction = (target - transform.position).normalized;
 
-            transform.position += direction * speed * Time.deltaTime;
+            dir = direction;
+            vel = direction * speed * Time.deltaTime;
+
+            transform.position += vel;
             if ((transform.position - target).sqrMagnitude <= 0.01f)
                 SetTarget();
         }
@@ -52,5 +62,18 @@
             target.x = Mathf.Clamp(target.x, boundsMin.x, boundsMax.x);
             target.z = Mathf.Clamp(target.z, boundsMin.y, boundsMax.y);
         }
+
+        public Vector3 PredictPlayerPositionTest()
+        {
+            return transform.position + (dir * (speed));
+            //     return transform.position + (dir * speed);
+        }
+
+        public Vector3 PredictPlayerPosition(float time)
+        {
+            return transform.position + (dir * speed * time);
+        //     return transform.position + (dir * speed);
+        }
+
     }
 }

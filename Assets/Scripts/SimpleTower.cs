@@ -37,14 +37,14 @@
             Enemy targetEnemy = FindClosestEnemy();
             if (targetEnemy != null)
             {
-                RotateToEnemy(targetEnemy);
+                RotateToPosition(targetEnemy.transform.position);
 
                 if (fireTimer <= 0f)
                 {
                     if (IsTowerLooksOnEnemy(targetEnemy))
                     {
-                        var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity);
-                        bullet.Initialize(targetEnemy, targetEnemy.transform.position );
+                        var bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, Quaternion.identity) as SimpleBullet;
+                        bullet.Initialize(targetEnemy, targetEnemy.transform.position);
                         fireTimer = firingRate;
                     }
                 }
@@ -59,9 +59,9 @@
             return (Vector3.Angle(direction, transform.forward)) < angleOfView;
         }
 
-        protected void RotateToEnemy(Enemy enemy)
+        protected void RotateToPosition(Vector3 targetPosition)
         {
-            Vector3 targetDirection = enemy.transform.position - transform.position;
+            Vector3 targetDirection = targetPosition - transform.position;
             float singleStep = rotationSpeed * Time.deltaTime;
 
             Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, singleStep, 0.0f);
@@ -76,8 +76,9 @@
             Enemy closestEnemy = null;
             var closestDistance = float.MaxValue;
 
-            foreach (var enemy in enemies)
+            for (var index = 0; index < enemies.Count; index++)
             {
+                var enemy = enemies[index];
                 var distance = Vector3.Distance(enemy.transform.position, transform.position);
                 if (distance > firingRange)
                 {

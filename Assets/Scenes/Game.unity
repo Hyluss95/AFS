@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b3a9e4bd535ba4ba141be99b2c2511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 7577324009426626682, guid: 530182aaaf989f444833d42faa8b16b7,
+  enemyPrefab: {fileID: 7577324009426626682, guid: 23762032648d2ce4789f70c08094bbb3,
     type: 3}
   towerTypeList: {fileID: 11400000, guid: 970ecfe1fe1058741a73cc6feb74979e, type: 2}
   boundsMin: {x: -12, y: -8}

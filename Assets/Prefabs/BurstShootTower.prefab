@@ -139,15 +139,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7163fdb4a3fbc2d4b94a1500099a46c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: -9149692060118113871, guid: bf11f6354539ac0438eed729f7a562e6,
+  bulletPrefab: {fileID: 683444761243672672, guid: 17e4bd5145094e24b960eedcc6016064,
     type: 3}
   bulletSpawnPoint: {fileID: 2084140073318113224}
-  firingRate: 2
-  firingRange: 4
+  firingRate: 0.3
+  firingRange: 15
   rotationSpeed: 5
   angleOfView: 10
+  test: {fileID: 7577324009426626682, guid: 530182aaaf989f444833d42faa8b16b7, type: 3}
   burstSize: 3
   shotInterval: 0.25
+  preventRotate: 0
 --- !u!1 &6978817907787719400
 GameObject:
   m_ObjectHideFlags: 0
