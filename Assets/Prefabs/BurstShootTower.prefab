@@ -142,11 +142,10 @@ MonoBehaviour:
   bulletPrefab: {fileID: 683444761243672672, guid: 17e4bd5145094e24b960eedcc6016064,
     type: 3}
   bulletSpawnPoint: {fileID: 2084140073318113224}
-  firingRate: 0.3
+  firingRate: 5
   firingRange: 7
   rotationSpeed: 5
   angleOfView: 10
-  test: {fileID: 7577324009426626682, guid: 530182aaaf989f444833d42faa8b16b7, type: 3}
   burstSize: 3
   shotInterval: 0.25
   preventRotate: 0

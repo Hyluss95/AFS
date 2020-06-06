@@ -156,7 +156,7 @@ MonoBehaviour:
   towerTypeList: {fileID: 11400000, guid: 970ecfe1fe1058741a73cc6feb74979e, type: 2}
   boundsMin: {x: -12, y: -8}
   boundsMax: {x: 12, y: 13}
-  enemySpawnRate: 0.3
+  enemySpawnRate: 3
   enemiesCountText: {fileID: 1950592539}
   scoreText: {fileID: 1448683484}
 --- !u!4 &536068723
@@ -194,7 +194,6 @@ MonoBehaviour:
       type: 3}
     amountToPool: 30
     shouldExpand: 1
-  pooledObjects: []
 --- !u!1 &726838010
 GameObject:
   m_ObjectHideFlags: 0
