@@ -14,9 +14,9 @@ Inne poprawki:
 - usunięto problem opisany w punkcie nr. 2
 - usunięto zbędne warningi - 0414,0219,0649
 
-warning CS0414: The private field `___' is assigned but its value is never used
-warning CS0219: The variable `___' is assigned but its value is never used
-warning CS0649: "Field is never assigned"
+- warning CS0414: The private field `___' is assigned but its value is never used
+- warning CS0219: The variable `___' is assigned but its value is never used
+- warning CS0649: "Field is never assigned"
 
 
 Żółte element widoczne na filmie pojawiają się w mojej błednie wyliczonej przyszłej pozycji obiektu.
