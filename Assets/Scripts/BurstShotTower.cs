@@ -69,8 +69,19 @@ namespace AFSInterview
 
             while (spawnedBullets < burstSize)
             {
-                var bullet =
-                    Instantiate(base.BulletPrefab, base.BulletSpawnPoint.position, Quaternion.identity) as Arrow;
+                Arrow bullet;
+                bullet= ObjectPooler.SharedInstance.GetPooledObject(base.BulletPrefab.tag).GetComponent<Arrow>();
+                if (bullet != null)
+                {
+                    bullet.transform.position = base.BulletSpawnPoint.position;
+                    bullet.transform.rotation = Quaternion.identity;
+                    bullet.gameObject.SetActive(true);
+                }
+                else
+                {
+                    bullet = Instantiate(base.BulletPrefab, base.BulletSpawnPoint.position, Quaternion.identity) as Arrow;
+                }
+
                 bullet.Initialize(targetPosition);
                 spawnedBullets++;
                 yield return new WaitForSeconds(shotInterval);

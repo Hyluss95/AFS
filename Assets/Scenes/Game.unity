@@ -131,6 +131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 536068723}
   - component: {fileID: 536068722}
+  - component: {fileID: 536068724}
   m_Layer: 0
   m_Name: '@GameplayManager'
   m_TagString: Untagged
@@ -172,6 +173,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &536068724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 536068721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a98a09be4c133d040be3820c1a83a845, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemsToPool:
+  - objectToPool: {fileID: 7251337396528109554, guid: 17e4bd5145094e24b960eedcc6016064,
+      type: 3}
+    amountToPool: 30
+    shouldExpand: 1
+  pooledObjects: []
 --- !u!1 &726838010
 GameObject:
   m_ObjectHideFlags: 0

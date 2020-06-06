@@ -4,12 +4,12 @@
 
     public class Arrow : Bullet
     {
+        [SerializeField]
         private Rigidbody rigidbody;
 
         public void Initialize(Vector3 targetPosition)
         {
             Vector3 vo = CalculateVelocity(targetPosition, transform.position);
-            rigidbody = GetComponent<Rigidbody>();
             rigidbody.velocity = vo;
         }
 
@@ -20,7 +20,10 @@
             {
                 Destroy(enemy.gameObject);
             }
-            Destroy(gameObject);
+
+            gameObject.SetActive(false);
+            //Destroy(gameObject);
+
         }
 
         public static Vector3 CalculateVelocity(Vector3 target, Vector3 origin)
