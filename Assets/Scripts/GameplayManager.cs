@@ -16,12 +16,14 @@
         [SerializeField] private float enemySpawnRate;
 
         [Header("UI")] 
-        [SerializeField] private GameObject enemiesCountText;
-        [SerializeField] private GameObject scoreText;
+        [SerializeField] private TextMeshProUGUI enemiesCountText;
+        [SerializeField] private TextMeshProUGUI scoreText;
         
         private List<Enemy> enemies;
         private float enemySpawnTimer;
         private int score;
+
+        private static LayerMask groundMask = 8;
 
         private void Awake()
         {
@@ -40,19 +42,31 @@
 
             if (Input.GetMouseButtonDown(0))
             {
-                var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                if (Physics.Raycast(ray, out var hit, LayerMask.GetMask("Ground")))
-                {
-                    var spawnPosition = hit.point;
-                    spawnPosition.y = towerPrefab.transform.position.y;
-
-                    SpawnTower(spawnPosition);
-                }
+                TrySpawnTower();
             }
 
-            scoreText.GetComponent<TextMeshProUGUI>().text = "Score: " + score;
-            enemiesCountText.GetComponent<TextMeshProUGUI>().text = "Enemies: " + enemies.Count;
+            scoreText.text = "Score: " + score;
+            enemiesCountText.text = "Enemies: " + enemies.Count;
+        }
+
+        private void TrySpawnTower()
+        {
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (!Physics.Raycast(ray, out var hit, Mathf.Infinity))
+            {
+                return;
+            }
+
+            if (hit.collider.gameObject.layer != groundMask.value)
+            {
+                return;
+            }
+
+            var spawnPosition = hit.point;
+            spawnPosition.y = towerPrefab.transform.position.y;
+
+            SpawnTower(spawnPosition);
         }
 
         private void SpawnEnemy()
